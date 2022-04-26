@@ -1,0 +1,16 @@
+C:\Users\chinmay.padhi\source\repos\Read opeartion using JSON\Read opeartion using JSON\bin\Debug\netcoreapp3.1\Read opeartion using JSON.exe
+C:\Users\chinmay.padhi\source\repos\Read opeartion using JSON\Read opeartion using JSON\bin\Debug\netcoreapp3.1\Read opeartion using JSON.deps.json
+C:\Users\chinmay.padhi\source\repos\Read opeartion using JSON\Read opeartion using JSON\bin\Debug\netcoreapp3.1\Read opeartion using JSON.runtimeconfig.json
+C:\Users\chinmay.padhi\source\repos\Read opeartion using JSON\Read opeartion using JSON\bin\Debug\netcoreapp3.1\Read opeartion using JSON.runtimeconfig.dev.json
+C:\Users\chinmay.padhi\source\repos\Read opeartion using JSON\Read opeartion using JSON\bin\Debug\netcoreapp3.1\Read opeartion using JSON.dll
+C:\Users\chinmay.padhi\source\repos\Read opeartion using JSON\Read opeartion using JSON\bin\Debug\netcoreapp3.1\Read opeartion using JSON.pdb
+C:\Users\chinmay.padhi\source\repos\Read opeartion using JSON\Read opeartion using JSON\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
+C:\Users\chinmay.padhi\source\repos\Read opeartion using JSON\Read opeartion using JSON\obj\Debug\netcoreapp3.1\Read opeartion using JSON.csproj.AssemblyReference.cache
+C:\Users\chinmay.padhi\source\repos\Read opeartion using JSON\Read opeartion using JSON\obj\Debug\netcoreapp3.1\Read opeartion using JSON.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\chinmay.padhi\source\repos\Read opeartion using JSON\Read opeartion using JSON\obj\Debug\netcoreapp3.1\Read opeartion using JSON.AssemblyInfoInputs.cache
+C:\Users\chinmay.padhi\source\repos\Read opeartion using JSON\Read opeartion using JSON\obj\Debug\netcoreapp3.1\Read opeartion using JSON.AssemblyInfo.cs
+C:\Users\chinmay.padhi\source\repos\Read opeartion using JSON\Read opeartion using JSON\obj\Debug\netcoreapp3.1\Read opeartion using JSON.csproj.CoreCompileInputs.cache
+C:\Users\chinmay.padhi\source\repos\Read opeartion using JSON\Read opeartion using JSON\obj\Debug\netcoreapp3.1\Read opeartion using JSON.csproj.CopyComplete
+C:\Users\chinmay.padhi\source\repos\Read opeartion using JSON\Read opeartion using JSON\obj\Debug\netcoreapp3.1\Read opeartion using JSON.dll
+C:\Users\chinmay.padhi\source\repos\Read opeartion using JSON\Read opeartion using JSON\obj\Debug\netcoreapp3.1\Read opeartion using JSON.pdb
+C:\Users\chinmay.padhi\source\repos\Read opeartion using JSON\Read opeartion using JSON\obj\Debug\netcoreapp3.1\Read opeartion using JSON.genruntimeconfig.cache
