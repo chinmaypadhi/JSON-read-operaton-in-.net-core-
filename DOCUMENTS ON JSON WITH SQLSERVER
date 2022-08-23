@@ -1,0 +1,344 @@
+
+
+                                 ----------------------CONVERT TABLE TO JSON STRING-----------------------------------
+
+
+
+
+
+create table TestJson(id int identity not null primary key,FirstName varchar(200),lastName varchar(200),MiddleName varchar(200) ) 
+
+
+insert into TestJson values('chinmay','padhi','kumar')
+insert into TestJson values('abyakta','bal','kumar')
+insert into TestJson values('lingaraj','dali','kumar')
+insert into TestJson values('akahya','dalai','kumar')
+
+select * from TestJson
+
+---------------------------statement to return json data  using JSON AUTO-------------------------
+--(1)Here we can't get any parent element .
+
+select FirstName,lastName,MiddleName
+from TestJson for json AUTO
+
+
+--output
+---------
+
+--[{"FirstName":"chinmay","lastName":"padhi","MiddleName":"kumar"},
+--{"FirstName":"abyakta","lastName":"bal","MiddleName":"kumar"},
+--{"FirstName":"lingaraj","lastName":"dali","MiddleName":"kumar"},
+--{"FirstName":"akahya","lastName":"dalai","MiddleName":"kumar"}]
+
+--(2) if we want some parent element for each sub element then we can follow the below way.
+
+select 
+FirstName as "Name.FirstName"
+,lastName as "Name.lastName"
+,MiddleName as "Name.MiddleName"
+from TestJson for json AUTO
+
+
+
+--output
+---------
+
+
+
+--[
+--  {
+--    "Name.FirstName": "chinmay",
+--    "Name.lastName": "padhi",
+--    "Name.MiddleName": "kumar"
+--  },
+--  {
+--    "Name.FirstName": "abyakta",
+--    "Name.lastName": "bal",
+--    "Name.MiddleName": "kumar"
+--  },
+--  {
+--    "Name.FirstName": "lingaraj",
+--    "Name.lastName": "dali",
+--    "Name.MiddleName": "kumar"
+--  },
+--  {
+--    "Name.FirstName": "akahya",
+--    "Name.lastName": "dalai",
+--    "Name.MiddleName": "kumar"
+--  }
+--]
+
+--(3)If we want to add an root element of json then we need to follow the below code.
+
+select 
+FirstName as "Name.FirstName"
+,lastName as "Name.lastName"
+,MiddleName as "Name.MiddleName"
+from TestJson for json path, root('Person')
+
+
+
+--output
+----------
+
+
+--{
+--  "Person": [
+--    {
+--      "Name": {
+--        "FirstName": "chinmay",
+--        "lastName": "padhi",
+--        "MiddleName": "kumar"
+--      }
+--    },
+--    {
+--      "Name": {
+--        "FirstName": "abyakta",
+--        "lastName": "bal",
+--        "MiddleName": "kumar"
+--      }
+--    },
+--    {
+--      "Name": {
+--        "FirstName": "lingaraj",
+--        "lastName": "dali",
+--        "MiddleName": "kumar"
+--      }
+--    },
+--    {
+--      "Name": {
+--        "FirstName": "akahya",
+--        "lastName": "dalai",
+--        "MiddleName": "kumar"
+--      }
+--    }
+--  ]
+--}
+
+
+
+
+
+--(4) if our table column will contain any null value then the converted json will remove that key.
+
+insert into TestJson values(null,null,null)
+
+
+
+select 
+ FirstName as "Name.FirstName"
+,lastName as "Name.lastName"
+,MiddleName as "Name.MiddleName"
+from TestJson for json path, root('Person')
+
+--output
+-----------
+--{
+--  "Person": [
+--    {
+--      "Name": {
+--        "FirstName": "chinmay",
+--        "lastName": "padhi",
+--        "MiddleName": "kumar"
+--      }
+--    },
+--    {
+--      "Name": {
+--        "FirstName": "abyakta",
+--        "lastName": "bal",
+--        "MiddleName": "kumar"
+--      }
+--    },
+--    {
+--      "Name": {
+--        "FirstName": "lingaraj",
+--        "lastName": "dali",
+--        "MiddleName": "kumar"
+--      }
+--    },
+--    {
+--      "Name": {
+--        "FirstName": "akahya",
+--        "lastName": "dalai",
+--        "MiddleName": "kumar"
+--      }
+--    },
+--    {}
+--  ]
+--}
+
+--(5) to resolve that we can do below solution  (INCLUDE_NULL_VALUES)
+
+select 
+ FirstName as "Name.FirstName"
+,lastName as "Name.lastName"
+,MiddleName as "Name.MiddleName"
+from TestJson for json path, root('Person'),INCLUDE_NULL_VALUES
+
+
+--output
+---------
+
+--{
+--  "Person": [
+--    {
+--      "Name": {
+--        "FirstName": "chinmay",
+--        "lastName": "padhi",
+--        "MiddleName": "kumar"
+--      }
+--    },
+--    {
+--      "Name": {
+--        "FirstName": "abyakta",
+--        "lastName": "bal",
+--        "MiddleName": "kumar"
+--      }
+--    },
+--    {
+--      "Name": {
+--        "FirstName": "lingaraj",
+--        "lastName": "dali",
+--        "MiddleName": "kumar"
+--      }
+--    },
+--    {
+--      "Name": {
+--        "FirstName": "akahya",
+--        "lastName": "dalai",
+--        "MiddleName": "kumar"
+--      }
+--    },
+--    {
+--      "Name": {
+--        "FirstName": null,
+--        "lastName": null,
+--        "MiddleName": null
+--      }
+--    }
+--  ]
+--}
+
+
+
+
+--(6)we can also use array wrapper '[]'   by using WITHOUT_ARRAY_WRAPPER element.
+
+
+select 
+ FirstName as "Name.FirstName"
+,lastName as "Name.lastName"
+,MiddleName as "Name.MiddleName"
+from TestJson for json path,INCLUDE_NULL_VALUES , WITHOUT_ARRAY_WRAPPER
+
+--NOTE root option and wrapper option can't use together
+
+
+--output
+----------
+
+
+  --{
+  --  "Name": {
+  --    "FirstName": "chinmay",
+  --    "lastName": "padhi",
+  --    "MiddleName": "kumar"
+  --  }
+  --},
+  --{
+  --  "Name": {
+  --    "FirstName": "abyakta",
+  --    "lastName": "bal",
+  --    "MiddleName": "kumar"
+  --  }
+  --},
+  --{
+  --  "Name": {
+  --    "FirstName": "lingaraj",
+  --    "lastName": "dali",
+  --    "MiddleName": "kumar"
+  --  }
+  --},
+  --{
+  --  "Name": {
+  --    "FirstName": "akahya",
+  --    "lastName": "dalai",
+  --    "MiddleName": "kumar"
+  --  }
+  --},
+  --{
+  --  "Name": {
+  --    "FirstName": null,
+  --    "lastName": null,
+  --    "MiddleName": null
+  --  }
+  --}
+
+
+                            --------------------------------------CONVERT JSON STRING TO SQL TABLE------------------------------------------
+
+
+--(1) OPENJSON
+--(2) JSON_VALUE()
+
+
+
+declare @jsonVariable varchar(max)
+
+set @jsonVariable='{
+  "Person": [
+    {
+
+        "FirstName": "chinmay",
+        "lastName": "padhi",
+        "MiddleName": "kumar"
+
+    },
+    {
+
+        "FirstName": "abyakta",
+        "lastName": "bal",
+        "MiddleName": "kumar"
+    },
+    {
+      
+        "FirstName": "lingaraj",
+        "lastName": "dali",
+        "MiddleName": "kumar"
+      
+    },
+    {
+     
+        "FirstName": "akahya",
+        "lastName": "dalai",
+        "MiddleName": "kumar"
+      }
+    
+  ]
+}'
+
+
+--By using   OPENJSON
+----------------------
+
+
+
+--select FirstName,lastName,MiddleName from openjson(@jsonVariable,'$.Person')
+
+--with(
+--FirstName varchar(200),
+--lastName varchar(200),
+--MiddleName varchar(200)
+--) as person
+
+
+--By using JSON_VALUE
+-------------------------------
+
+select 
+   JSON_VALUE(p.value,'$.FirstName') as FirstName,
+   JSON_VALUE(p.value,'$.lastName') as lastName,
+   JSON_VALUE(p.value,'$.MiddleName') as MiddleName
+   from Openjson(@jsonVariable,'$.Person')p
+
