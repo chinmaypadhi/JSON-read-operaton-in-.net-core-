@@ -342,3 +342,123 @@ select
    JSON_VALUE(p.value,'$.MiddleName') as MiddleName
    from Openjson(@jsonVariable,'$.Person')p
 
+   ------------------------------------------------PARSE JSON WITH NESTED ARRY OF ELEMENTS--------------------------------------------------------------------
+
+
+
+
+   Declare @json varchar(max)
+
+   set @json=
+   '{
+  "orderHeader": [
+    {
+      "orderID": 100,
+      "CustomerID": 200,
+      "orderDetail": {
+        "productID": 200,
+        "unitPrice": 305
+      }
+    }
+  ]
+}'
+
+
+
+   --select 
+   --JSON_VALUE(a.value,'$.orderID') as orderID,
+   --JSON_VALUE(a.value,'$.CustomerID') as CustomerID,
+   --JSON_VALUE(a.value,'$.productID') as productID,
+   --JSON_VALUE(a.value,'$.unitPrice') as unitPrice
+   --from OPENJSON(@json,'$.orderHeader') as a
+
+  --NOTE :  here productID and unitPrice is null because it nested into anather key . we can get that value by using '.' operator  like below example.
+
+
+   select 
+   JSON_VALUE(a.value,'$.orderID') as orderID,
+   JSON_VALUE(a.value,'$.CustomerID') as CustomerID,
+   JSON_VALUE(a.value,'$.orderDetail.productID') as productID,
+   JSON_VALUE(a.value,'$.orderDetail.unitPrice') as unitPrice
+   from OPENJSON(@json,'$.orderHeader') as a
+
+
+--(*) If our json contain multiple nested key like a list then we need to follow below mechanism.
+
+
+   Declare @json varchar(max)
+
+   set @json=
+   '{
+  "orderHeader": [
+    {
+      "orderID": 100,
+      "CustomerID": 200,
+      "orderDetail":[ {
+        "productID": 200,
+        "unitPrice": 305
+      },
+	  {
+        "productID": 676,
+        "unitPrice": 45
+      }
+	  ]
+    }
+  ]
+}'
+
+
+
+
+
+   select 
+   JSON_VALUE(a.value,'$.orderID') as orderID,
+   JSON_VALUE(a.value,'$.CustomerID') as CustomerID,
+   JSON_VALUE(a.value,'$.orderDetail[0].productID') as productID,
+   JSON_VALUE(a.value,'$.orderDetail[1].unitPrice') as unitPrice
+   from OPENJSON(@json,'$.orderHeader') as a
+
+
+   ------------------------*****************************************************---------------------------------------------------------(USE FULL)
+
+   --(*) We can use cross apply openjson() we can get all the loop data as a table.
+
+
+   Declare @json varchar(max)
+
+   set @json=
+   '{
+  "orderHeader": [
+    {
+      "orderID": 100,
+      "CustomerID": 200,
+      "orderDetail":[ {
+        "productID": 200,
+        "unitPrice": 305
+      },
+	  {
+        "productID": 676,
+        "unitPrice": 45
+      },
+	   {
+        "productID": 76,
+        "unitPrice": 8675
+      }
+	  ]
+    }
+  ]
+}'
+
+
+
+
+
+   select 
+   JSON_VALUE(a.value,'$.orderID') as orderID,
+   JSON_VALUE(a.value,'$.CustomerID') as CustomerID,
+   JSON_VALUE(b.value,'$.productID') as productID,
+   JSON_VALUE(b.value,'$.unitPrice') as unitPrice
+   from OPENJSON(@json,'$.orderHeader') as a
+   Cross apply openjson(a.value,'$.orderDetail')as b
+
+
